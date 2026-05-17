@@ -22,7 +22,7 @@ export default function Footer() {
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/15">
                 <Building2 className="h-5 w-5" />
               </div>
-              <span className="font-serif text-2xl font-semibold">TempCompany</span>
+              <span className="font-serif  text-2xl font-semibold">TempCompany</span>
             </div>
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-white/70">
               Crafting trusted real-estate experiences across India — luxury living, premium plots
