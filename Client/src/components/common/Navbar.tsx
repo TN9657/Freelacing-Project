@@ -50,7 +50,7 @@ export default function Navbar() {
               transparentOnHero ? "text-white" : "text-primary",
             )}
           >
-            TempCompany
+            PrachiInfra
           </span>
         </Link>
 
