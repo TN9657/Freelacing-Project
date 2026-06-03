@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { MapPin, Maximize2, Phone } from "lucide-react";
 import type { Property } from "@/data/addInformation";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function PropertyCard({
   property,
@@ -10,6 +11,14 @@ export default function PropertyCard({
   property: Property;
   index?: number;
 }) {
+  const { language } = useLanguage();
+  const isMr = language === "mr";
+
+  const title = isMr && property.titleMr ? property.titleMr : property.title;
+  const location = isMr && property.locationMr ? property.locationMr : property.location;
+  const description = isMr && property.descriptionMr ? property.descriptionMr : property.description;
+  const amenities = isMr && property.amenitiesMr ? property.amenitiesMr : property.amenities;
+
   return (
     <motion.article
       initial={{ opacity: 0, y: 32 }}
@@ -25,7 +34,7 @@ export default function PropertyCard({
       >
         <img
           src={property.image}
-          alt={property.title}
+          alt={title}
           loading="lazy"
           width={1024}
           height={768}
@@ -37,14 +46,14 @@ export default function PropertyCard({
         </span>
         {property.featured && (
           <span className="absolute right-4 top-4 rounded-full bg-gradient-royal px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-white">
-            Featured
+            {isMr ? "वैशिष्ट्यीकृत" : "Featured"}
           </span>
         )}
         <div className="absolute inset-x-4 bottom-4 flex items-end justify-between text-white">
           <span className="font-serif text-2xl font-semibold">{property.price}</span>
           <span className="flex items-center gap-1.5 text-xs text-white/85">
             <MapPin className="h-3.5 w-3.5" />
-            {property.location}
+            {location}
           </span>
         </div>
       </Link>
@@ -52,13 +61,20 @@ export default function PropertyCard({
       <div className="flex flex-1 flex-col p-6">
         <Link to="/property/$id" params={{ id: String(property.id) }}>
           <h3 className="font-serif text-xl font-semibold text-primary transition-colors group-hover:text-accent">
-            {property.title}
+            {title}
           </h3>
         </Link>
         <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
-          {property.description}
+          {description}
         </p>
-        <div className="mt-5 flex items-center justify-between border-t border-border pt-5">
+        <div className="mt-3 flex flex-wrap gap-1.5">
+          {amenities.map((a) => (
+            <span key={a} className="rounded-full bg-secondary px-2.5 py-0.5 text-[10px] font-medium text-primary">
+              {a}
+            </span>
+          ))}
+        </div>
+        <div className="mt-4 flex items-center justify-between border-t border-border pt-4">
           <span className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
             <Maximize2 className="h-3.5 w-3.5" />
             {property.area}
@@ -68,7 +84,7 @@ export default function PropertyCard({
             className="inline-flex items-center gap-2 rounded-full bg-secondary px-4 py-2 text-xs font-semibold text-primary transition-colors hover:bg-primary hover:text-white"
           >
             <Phone className="h-3.5 w-3.5" />
-            Contact
+            {isMr ? "संपर्क" : "Contact"}
           </a>
         </div>
       </div>
