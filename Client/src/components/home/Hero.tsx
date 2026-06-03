@@ -75,7 +75,7 @@ export default function Hero() {
           </Link>
         </motion.div>
 
-        {/* Search */}
+        {/*
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -111,18 +111,18 @@ export default function Hero() {
               Search
             </button>
           </form>
-        </motion.div>
+        </motion.div> */}
       </div>
 
       {/* scroll cue */}
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.6, duration: 1 }}
         className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-[10px] uppercase tracking-[0.4em] text-white/70"
       >
         Scroll
-      </motion.div>
+      </motion.div> */}
     </section>
   );
 }

@@ -226,6 +226,20 @@ const properties: Property[] = [
     amenities: ["Terrace Garden", "Jacuzzi", "Private Lift", "Smart Home"],
     featured: true,
   },
+  {
+    id: 13,
+    title: "Skyline Penthouse",
+    category: "Luxury Homes",
+    location: "Bangalore",
+    price: "₹8.4 Cr",
+    priceValue: 840,
+    area: "5200 Sq.ft",
+    image: residential,
+    description: "Duplex penthouse with private terrace garden, jacuzzi and 360° skyline views.",
+    contact: "+91 98765 43210",
+    amenities: ["Terrace Garden", "Jacuzzi", "Private Lift", "Smart Home"],
+    featured: true,
+  },
 ];
 
 export default properties;
