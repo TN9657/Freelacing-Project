@@ -7,6 +7,8 @@ import commercial from "@/assets/prop-commercial.jpg";
 import apartment from "@/assets/prop-apartment.jpg";
 import farmhouse from "@/assets/prop-farmhouse.jpg";
 import residential from "@/assets/prop-residential.jpg";
+import { useLanguage } from "@/context/LanguageContext";
+import { translations } from "@/lib/translations";
 
 const images = [
   { src: villa, span: "col-span-2 lg:col-span-2 lg:row-span-2 aspect-[2/1] lg:aspect-square" },
@@ -18,13 +20,16 @@ const images = [
 ];
 
 export default function Gallery() {
+  const { language } = useLanguage();
+  const t = translations[language];
+
   return (
     <section className="bg-white py-16 sm:py-20 lg:py-28">
       <Container>
         <SectionHeading
-          eyebrow="Portfolio"
-          title="A Glimpse Inside"
-          subtitle="Moments from properties we've represented over the years."
+          eyebrow={language === "en" ? "Portfolio" : "पोर्टफोलिओ"}
+          title={t.gallery.title}
+          subtitle={t.gallery.subtitle}
         />
         <div className="mt-10 sm:mt-14 grid grid-cols-2 gap-2 sm:gap-3 lg:grid-cols-4">
           {images.map((img, i) => (

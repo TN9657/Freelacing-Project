@@ -30,3 +30,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+
+IMPLEMENTATION_ARCHITECTURE.md
+LANGUAGE_IMPLEMENTATION_SUMMARY.md

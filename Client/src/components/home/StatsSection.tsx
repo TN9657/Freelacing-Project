@@ -1,13 +1,18 @@
 import { motion, useInView, useMotionValue, useTransform, animate } from "motion/react";
 import { useEffect, useRef } from "react";
 import Container from "../common/Container";
+import { useLanguage } from "@/context/LanguageContext";
+import { translations } from "@/lib/translations";
 
-const stats = [
-  { value: 500, suffix: "+", label: "Properties Sold" },
-  { value: 1200, suffix: "+", label: "Happy Clients" },
-  { value: 15, suffix: "+", label: "Years of Experience" },
-  { value: 12, suffix: "", label: "Cities Covered" },
-];
+const getStats = (language: "en" | "mr") => {
+  const t = translations[language];
+  return [
+    { value: 500, suffix: "+", label: t.stats.properties },
+    { value: 1200, suffix: "+", label: t.stats.clients },
+    { value: 15, suffix: "+", label: t.stats.experience },
+    { value: 12, suffix: "", label: t.stats.locations },
+  ];
+};
 
 function Counter({ to, suffix }: { to: number; suffix: string }) {
   const ref = useRef<HTMLSpanElement>(null);
@@ -26,6 +31,9 @@ function Counter({ to, suffix }: { to: number; suffix: string }) {
 }
 
 export default function StatsSection() {
+  const { language } = useLanguage();
+  const stats = getStats(language);
+
   return (
     <section className="relative overflow-hidden bg-gradient-royal py-16 sm:py-20 lg:py-24 text-white">
       <div className="absolute inset-0 opacity-20 [background-image:radial-gradient(circle_at_20%_20%,white,transparent_40%),radial-gradient(circle_at_80%_80%,white,transparent_40%)]" />

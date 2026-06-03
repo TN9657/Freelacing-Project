@@ -1,5 +1,5 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { createFileRoute, Link, useSearch } from "@tanstack/react-router";
+import { useMemo, useState, useEffect } from "react";
 import Container from "@/components/common/Container";
 import SectionHeading from "@/components/common/SectionHeading";
 import PropertyFilter, { type Filters } from "@/components/properties/PropertyFilter";
@@ -7,6 +7,11 @@ import PropertyGrid from "@/components/properties/PropertyGrid";
 import properties, { categories } from "@/data/addInformation";
 
 export const Route = createFileRoute("/properties")({
+  validateSearch: (search: Record<string, unknown>) => {
+    return {
+      selectedCategory: (search.selectedCategory as string) || undefined,
+    };
+  },
   head: () => ({
     meta: [
       { title: "Properties — TempCompany" },
@@ -23,12 +28,23 @@ export const Route = createFileRoute("/properties")({
 });
 
 function PropertiesPage() {
+  const searchParams = useSearch({ from: "/properties" });
   const [filters, setFilters] = useState<Filters>({
     category: "All",
     location: "All",
     maxPrice: 1500,
     featuredOnly: false,
   });
+
+  useEffect(() => {
+    if (searchParams.selectedCategory) {
+      setFilters((prev) => ({
+        ...prev,
+        category: searchParams.selectedCategory as Filters["category"],
+      }));
+    }
+  }, [searchParams.selectedCategory]);
+
   const locations = useMemo(
     () => Array.from(new Set(properties.map((p) => p.location))).sort(),
     [],

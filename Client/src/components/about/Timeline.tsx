@@ -1,40 +1,18 @@
 import { motion } from "motion/react";
 import Container from "../common/Container";
 import SectionHeading from "../common/SectionHeading";
-
-const milestones = [
-  {
-    year: "2009",
-    title: "Founded in Mumbai",
-    text: "Started with a single office and one promise — only present what we'd own.",
-  },
-  {
-    year: "2013",
-    title: "Pune & Nashik",
-    text: "Opened regional desks to cover Maharashtra's fastest-growing corridors.",
-  },
-  {
-    year: "2017",
-    title: "Luxury Portfolio Launch",
-    text: "Introduced our curated Luxury division for villas and penthouses.",
-  },
-  {
-    year: "2021",
-    title: "NRI Services",
-    text: "Built a remote-buyer practice with video tours and end-to-end paperwork.",
-  },
-  {
-    year: "2024",
-    title: "1,200+ Owners",
-    text: "Crossed our 1,200-client milestone — most through referrals.",
-  },
-];
+import { useLanguage } from "../../context/LanguageContext";
+import { translations } from "../../lib/translations";
 
 export default function Timeline() {
+  const { language } = useLanguage();
+  const t = translations[language];
+  const milestones = t.timeline.milestones;
+
   return (
     <section className="bg-secondary/50 py-16 sm:py-20 lg:py-28">
       <Container>
-        <SectionHeading eyebrow="Our Journey" title="Fifteen Years, One Standard" />
+        <SectionHeading eyebrow={t.timeline.eyebrow} title={t.timeline.title} />
         <div className="relative mt-16">
           <div className="absolute left-4 top-0 h-full w-px bg-border md:left-1/2" />
           <ul className="space-y-12">

@@ -3,12 +3,16 @@ import { motion, useScroll, useTransform } from "motion/react";
 import { ArrowRight, MapPin, Search } from "lucide-react";
 import { useRef } from "react";
 import hero from "@/assets/hero-villa.jpg";
+import { useLanguage } from "@/context/LanguageContext";
+import { translations } from "@/lib/translations";
 
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 600], [0, 120]);
   const scale = useTransform(scrollY, [0, 600], [1, 1.08]);
+  const { language } = useLanguage();
+  const t = translations[language];
 
   return (
     <section
@@ -33,7 +37,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-[10px] sm:text-xs font-medium uppercase tracking-[0.22em] sm:tracking-[0.4em] text-white/80"
         >
-          Luxury Living • Trusted Investments
+          {t.hero.eyebrow}
         </motion.p>
         <motion.h1
           initial={{ opacity: 0, y: 40 }}
@@ -41,8 +45,8 @@ export default function Hero() {
           transition={{ duration: 1, delay: 0.4, ease: [0.2, 0.7, 0.2, 1] }}
           className="mt-5 sm:mt-6 max-w-4xl font-serif text-[2rem] xs:text-4xl font-semibold leading-[1.08] sm:text-5xl md:text-6xl lg:text-7xl"
         >
-          Find Your Dream Property
-          <span className="block italic font-light text-light-blue">With Elegance</span>
+          {t.hero.title}
+          <span className="block italic font-light text-light-blue">{t.hero.subtitle}</span>
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
@@ -50,8 +54,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.7 }}
           className="mt-5 sm:mt-6 max-w-xl text-sm leading-relaxed text-white/85 sm:text-base md:text-lg"
         >
-          Curated estates, plots and investments across India's most desirable locations —
-          handpicked by TempCompany.
+          {t.hero.description}
         </motion.p>
 
         <motion.div
@@ -64,14 +67,14 @@ export default function Hero() {
             to="/properties"
             className="group inline-flex items-center gap-2 rounded-full bg-white text-blue-900 text-bold px-6 sm:px-7 py-3 sm:py-3.5 text-sm font-semibold text-primary shadow-luxury transition-transform hover:scale-[1.04]"
           >
-            Explore Properties
+            {t.hero.exploreProperties}
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Link>
           <Link
             to="/contact"
             className="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 sm:px-7 py-3 sm:py-3.5 text-sm font-semibold text-white backdrop-blur-sm transition-colors hover:bg-white/10"
           >
-            Schedule a Visit
+            {t.hero.scheduleVisit}
           </Link>
         </motion.div>
 

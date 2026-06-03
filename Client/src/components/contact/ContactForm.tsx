@@ -2,16 +2,21 @@ import { motion } from "motion/react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Send } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
+import { translations } from "@/lib/translations";
 
 export default function ContactForm() {
   const [sending, setSending] = useState(false);
+  const { language } = useLanguage();
+  const t = translations[language];
+
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSending(true);
     await new Promise((r) => setTimeout(r, 700));
     setSending(false);
     (e.target as HTMLFormElement).reset();
-    toast.success("Thank you — we'll be in touch within one business day.");
+    toast.success(t.contact.thanks);
   };
   return (
     <motion.form
@@ -22,17 +27,17 @@ export default function ContactForm() {
       transition={{ duration: 0.7 }}
       className="rounded-3xl bg-white p-6 sm:p-8 lg:p-10 shadow-luxury"
     >
-      <h3 className="font-serif text-3xl sm:text-4xl font-semibold text-primary">Share Your Vision</h3>
-      <p className="mt-3 text-sm text-muted-foreground italic">Our team of specialists responds personally within one business day</p>
+      <h3 className="font-serif text-3xl sm:text-4xl font-semibold text-primary">{t.contact.subtitle}</h3>
+      <p className="mt-3 text-sm text-muted-foreground italic">{t.contact.message}</p>
       <div className="mt-6 sm:mt-8 grid gap-4 sm:gap-5 sm:grid-cols-2">
-        <Field label="Name" name="name" required />
-        <Field label="Email" name="email" type="email" required />
-        <Field label="Phone" name="phone" type="tel" />
-        <Field label="Looking for" name="category" placeholder="e.g. Villa in Lonavala" />
+        <Field label={t.contact.name} name="name" required />
+        <Field label={t.contact.email} name="email" type="email" required />
+        <Field label={t.contact.phone} name="phone" type="tel" />
+        <Field label={t.contact.lookingFor} name="category" placeholder={language === "en" ? "e.g. Villa in Lonavala" : "जैसे मुंबई में विला"} />
       </div>
       <div className="mt-5">
         <label className="mb-2 block text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-          Your Message
+          {t.contact.yourMessage}
         </label>
         <textarea
           name="message"
@@ -47,7 +52,7 @@ export default function ContactForm() {
         className="mt-7 sm:mt-8 inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-gradient-royal px-7 py-3.5 text-sm font-semibold text-white shadow-luxury transition-transform hover:scale-[1.03] disabled:opacity-60"
       >
         <Send className="h-4 w-4" />
-        {sending ? "Sending..." : "Send Inquiry"}
+        {sending ? t.contact.sending : t.contact.send}
       </button>
     </motion.form>
   );

@@ -1,20 +1,25 @@
 import { Link, useLocation } from "@tanstack/react-router";
-import { Menu, X, Search, Building2 } from "lucide-react";
+import { Menu, X, Search, Building2, Globe } from "lucide-react";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/context/LanguageContext";
+import { translations } from "@/lib/translations";
 
-const links = [
-  { to: "/", label: "Home" },
-  { to: "/about", label: "About Us" },
-  { to: "/properties", label: "Properties" },
-  { to: "/contact", label: "Contact" },
+const getLinks = (lang: "en" | "mr") => [
+  { to: "/", label: lang === "en" ? "Home" : "होम" },
+  { to: "/about", label: lang === "en" ? "About Us" : "आमच्याबद्दल" },
+  { to: "/properties", label: lang === "en" ? "Properties" : "मालमत्ता" },
+  { to: "/contact", label: lang === "en" ? "Contact" : "संपर्क" },
 ] as const;
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [langDropdown, setLangDropdown] = useState(false);
   const { pathname } = useLocation();
+  const { language, setLanguage } = useLanguage();
   const transparentOnHero = pathname === "/" && !scrolled;
+  const links = getLinks(language);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -54,7 +59,7 @@ export default function Navbar() {
           </span>
         </Link>
 
-        <div className="hidden items-center gap-10 md:flex">
+        <div className="hidden items-center gap-6 md:flex">
           {links.map((l) => (
             <Link
               key={l.to}
@@ -86,11 +91,64 @@ export default function Navbar() {
           >
             <Search className="h-4 w-4" />
           </button>
+
+          {/* Language Dropdown */}
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setLangDropdown((v) => !v)}
+              className={cn(
+                "flex items-center gap-1.5 rounded-full p-2 transition-colors",
+                transparentOnHero
+                  ? "text-white hover:bg-white/10"
+                  : "text-primary hover:bg-secondary",
+              )}
+              aria-label="Toggle language"
+            >
+              <Globe className="h-4 w-4" />
+              <span className="text-xs font-semibold uppercase">
+                {language === "en" ? "EN" : "MR"}
+              </span>
+            </button>
+            {langDropdown && (
+              <div className="absolute right-0 mt-1 w-24 rounded-lg bg-white shadow-lg border border-border overflow-hidden z-50">
+                <button
+                  onClick={() => {
+                    setLanguage("en");
+                    setLangDropdown(false);
+                  }}
+                  className={cn(
+                    "w-full px-4 py-2.5 text-sm font-medium text-left transition-colors",
+                    language === "en"
+                      ? "bg-gradient-royal text-white"
+                      : "text-primary hover:bg-secondary"
+                  )}
+                >
+                  English
+                </button>
+                <button
+                  onClick={() => {
+                    setLanguage("mr");
+                    setLangDropdown(false);
+                  }}
+                  className={cn(
+                    "w-full px-4 py-2.5 text-sm font-medium text-left transition-colors",
+                    language === "mr"
+                      ? "bg-gradient-royal text-white"
+                      : "text-primary hover:bg-secondary"
+                  )}
+                >
+                  मराठी
+                </button>
+              </div>
+            )}
+          </div>
+
           <Link
             to="/contact"
             className="rounded-full bg-gradient-royal px-5 py-2.5 text-sm font-medium text-white shadow-card-luxury transition-transform hover:scale-[1.03]"
           >
-            Get in Touch
+            {language === "en" ? "Get in Touch" : "संपर्क साधा"}
           </Link>
         </div>
 
@@ -119,11 +177,46 @@ export default function Navbar() {
                 {l.label}
               </Link>
             ))}
+            <div className="mt-2 border-t border-border pt-3">
+              <p className="px-3 text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-2">
+                {language === "en" ? "Language" : "भाषा"}
+              </p>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => {
+                    setLanguage("en");
+                    setOpen(false);
+                  }}
+                  className={cn(
+                    "flex-1 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
+                    language === "en"
+                      ? "bg-gradient-royal text-white"
+                      : "bg-secondary text-primary hover:bg-border"
+                  )}
+                >
+                  English
+                </button>
+                <button
+                  onClick={() => {
+                    setLanguage("mr");
+                    setOpen(false);
+                  }}
+                  className={cn(
+                    "flex-1 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
+                    language === "mr"
+                      ? "bg-gradient-royal text-white"
+                      : "bg-secondary text-primary hover:bg-border"
+                  )}
+                >
+                  मराठी
+                </button>
+              </div>
+            </div>
             <Link
               to="/contact"
-              className="mt-2 rounded-full bg-gradient-royal px-5 py-3 text-center text-sm font-medium text-white"
+              className="mt-3 rounded-full bg-gradient-royal px-5 py-3 text-center text-sm font-medium text-white"
             >
-              Get in Touch
+              {language === "en" ? "Get in Touch" : "संपर्क साधा"}
             </Link>
           </div>
         </div>

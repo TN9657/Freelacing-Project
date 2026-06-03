@@ -2,38 +2,43 @@ import { motion } from "motion/react";
 import { Award, Building2, HandCoins, ShieldCheck } from "lucide-react";
 import Container from "../common/Container";
 import SectionHeading from "../common/SectionHeading";
-
-const items = [
-  {
-    icon: ShieldCheck,
-    title: "Verified Listings",
-    text: "Every title checked, every document reviewed before it reaches you.",
-  },
-  {
-    icon: Award,
-    title: "15+ Years Expertise",
-    text: "A trusted name across Mumbai, Pune, Bangalore and Goa.",
-  },
-  {
-    icon: HandCoins,
-    title: "Investment-Grade",
-    text: "Curated assets that grow in value, location after location.",
-  },
-  {
-    icon: Building2,
-    title: "End-to-End Service",
-    text: "From discovery to registration — handled with white-glove care.",
-  },
-];
+import { useLanguage } from "../../context/LanguageContext";
+import { translations } from "../../lib/translations";
 
 export default function WhyChooseUs() {
+  const { language } = useLanguage();
+  const t = translations[language];
+
+  const items = [
+    {
+      icon: ShieldCheck,
+      title: t.whyChooseUs.verifiedListings,
+      text: t.whyChooseUs.verifiedListingsText,
+    },
+    {
+      icon: Award,
+      title: t.whyChooseUs.expertise,
+      text: t.whyChooseUs.expertiseText,
+    },
+    {
+      icon: HandCoins,
+      title: t.whyChooseUs.investmentGrade,
+      text: t.whyChooseUs.investmentGradeText,
+    },
+    {
+      icon: Building2,
+      title: t.whyChooseUs.endToEnd,
+      text: t.whyChooseUs.endToEndText,
+    },
+  ];
+
   return (
     <section className="bg-white py-16 sm:py-20 lg:py-28">
       <Container>
         <SectionHeading
-          eyebrow="Why Choose Us"
-          title="The TempCompany Difference"
-          subtitle="We're not a marketplace. We're a small, careful team that treats your investment like our own."
+          eyebrow={t.whyChooseUs.eyebrow}
+          title={t.whyChooseUs.title}
+          subtitle={t.whyChooseUs.subtitle}
         />
         <div className="mt-12 sm:mt-16 grid gap-5 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
           {items.map((it, i) => (

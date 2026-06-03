@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import Hero from "@/components/home/Hero";
 import FeaturedProperties from "@/components/home/FeaturedProperties";
+import CategorySection from "@/components/home/CategorySection";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
 import StatsSection from "@/components/home/StatsSection";
 import Testimonials from "@/components/home/Testimonials";
@@ -27,10 +29,13 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
+  const [language, setLanguage] = useState<"en" | "mr">("en");
+
   return (
     <>
       <Hero />
       <FeaturedProperties />
+      <CategorySection language={language} />
       <WhyChooseUs />
       <StatsSection />
       <Testimonials />
